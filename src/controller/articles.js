@@ -1,4 +1,4 @@
-import firestore from '../firebaseConfig';
+const firestore = require('../firebaseConfig');
 
 exports.createPost = async (req, res) => {
   const { title, content, category } = req.body;

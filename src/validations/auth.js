@@ -1,6 +1,6 @@
-import bcrypt from 'bcrypt';
-import JWT from 'jsonwebtoken';
-import firestore from '../firebaseConfig';
+const bcrypt = require('bcrypt');
+const JWT = require('jsonwebtoken');
+const firestore = require('../firebaseConfig');
 
 const Validations = {
 
