@@ -1,6 +1,6 @@
 /* eslint-disable quote-props */
-import * as admin from 'firebase-admin';
-import dotenv from 'dotenv';
+const admin = require('firebase-admin');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -23,7 +23,7 @@ admin.initializeApp({
 });
 const db = admin.firestore();
 
-export default {
+module.exports = {
   admin,
   db,
 };
