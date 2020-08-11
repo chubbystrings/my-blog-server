@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import JWT from 'jsonwebtoken';
 import firestore from '../firebaseConfig';
 
-export default {
+const Validations = {
 
   hashPassword(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
@@ -64,3 +64,5 @@ export default {
   },
 
 };
+
+module.exports = Validations;

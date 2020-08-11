@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
-const logger = require('simple-node-logger').createSimpleLogger();
 const http = require('http');
+const logger = require('simple-node-logger').createSimpleLogger();
+
 const app = require('./app');
 
 const server = http.createServer(app);

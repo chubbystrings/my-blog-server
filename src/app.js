@@ -1,12 +1,12 @@
-import express from 'express';
-import morgan from 'morgan';
-import dotenv from 'dotenv'; // for accessing config in .env file
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import path from 'path';
-import routes from './routes/index';
-
+const express = require('express');
+const morgan = require('morgan');
+const dotenv = require('dotenv'); // for accessing config in .env file
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const path = require('path');
 const rfs = require('rotating-file-stream'); // version 2.x
+const adminRoutes = require('./routes/admin');
+const blogRoutes = require('./routes/blog');
 
 dotenv.config();
 
@@ -33,8 +33,11 @@ app.use(morgan('dev'));
 // setup the logger
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms', { stream: requestLogStream }));
 
-routes(app);
+app.get('/', (req, res) => res.status(200).send({
+  message: 'my blog cms server is live',
+}));
 
-app.get('*', (req, res) => { res.end('my-blog-cms'); });
+app.use('/api/v1/admin', adminRoutes);
+app.use('/api/v1/articles', blogRoutes);
 
 module.exports = app;
