@@ -10,5 +10,6 @@ router.get('/author', adminUser.verifyAdminUser, articles.get_article_by_author)
 router.get('/:articleid', articles.get_article_by_id);
 router.patch('/:articleid', adminUser.verifyAdminUser, articles.update_one);
 router.delete('/:articleid', adminUser.verifyAdminUser, articles.delete_one);
+router.delete('/deletemany/:ids', adminUser.verifyAdminUser, articles.delete_many);
 
 module.exports = router;

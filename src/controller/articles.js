@@ -265,3 +265,50 @@ exports.update_one = async (req, res) => {
     });
   }
 };
+
+exports.delete_many = async (req, res) => {
+  const { ids } = req.params;
+  if (!ids || !ids.includes(',')) {
+    return res.status(400).send({
+      status: 'error',
+      error: 'No ids provided',
+    });
+  }
+
+  const idsArray = ids.split(',');
+  if (idsArray.length > 7) {
+    return res.status(400).send({
+      status: 'error',
+      error: 'can delete only 7 at a time',
+    });
+  }
+
+  try {
+    const batch = firestore.db.batch();
+    idsArray.forEach((id) => {
+      const postRef = firestore.db.collection('posts').doc(id);
+      const viewRef = firestore.db.collection('views').doc(id);
+      batch.delete(postRef);
+      batch.delete(viewRef);
+    });
+    await batch.commit();
+    return res.status(200).send({
+      status: 'successful',
+      data: {
+        message: 'Deleted successfully',
+      },
+    });
+  } catch (error) {
+    if (error.code) {
+      return res.status(500).send({
+        status: 'error',
+        error: error.message,
+      });
+    }
+
+    return res.status(500).send({
+      status: 'error',
+      error,
+    });
+  }
+};
